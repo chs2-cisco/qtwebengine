@@ -41,6 +41,7 @@
 #include "web_contents_adapter.h"
 #include "web_contents_adapter_client.h"
 
+#include <QCoreApplication>
 #include <QExplicitlySharedDataPointer>
 #include <QPoint>
 #include <QQmlComponent>
@@ -111,8 +112,9 @@ private:
     QUrl m_targetUrl;
 };
 
-class UIDelegatesManager {
-
+class UIDelegatesManager
+{
+    Q_DECLARE_TR_FUNCTIONS(UIDelegatesManager)
 public:
     enum ComponentType {
         Invalid = -1,
