@@ -103,6 +103,7 @@ QQuickWebEngineViewPrivate::QQuickWebEngineViewPrivate()
     , m_isFullScreen(false)
     , isLoading(false)
     , devicePixelRatio(QGuiApplication::primaryScreen()->devicePixelRatio())
+    , m_navigationEnabled(true)
     , m_dpiScale(1.0)
 {
     // The gold standard for mobile web content is 160 dpi, and the devicePixelRatio expected
@@ -180,7 +181,7 @@ bool QQuickWebEngineViewPrivate::contextMenuRequested(const WebEngineContextMenu
     // Populate our menu
     MenuItemHandler *item = 0;
 
-    if (data.selectedText.isEmpty()) {
+    if (m_navigationEnabled && data.selectedText.isEmpty()) {
         item = new MenuItemHandler(menu);
         QObject::connect(item, &MenuItemHandler::triggered, q, &QQuickWebEngineView::goBack);
         ui()->addMenuItem(item, QObject::tr("Back"), QStringLiteral("go-previous"), q->canGoBack());
@@ -192,15 +193,17 @@ bool QQuickWebEngineViewPrivate::contextMenuRequested(const WebEngineContextMenu
         item = new MenuItemHandler(menu);
         QObject::connect(item, &MenuItemHandler::triggered, q, &QQuickWebEngineView::reload);
         ui()->addMenuItem(item, QObject::tr("Reload"), QStringLiteral("view-refresh"));
-    } else {
+    } else if(!data.selectedText.isEmpty()) {
         item = new MenuItemHandler(menu);
         QObject::connect(item, &MenuItemHandler::triggered, [q] { q->triggerWebAction(QQuickWebEngineView::Copy); });
         ui()->addMenuItem(item, QObject::tr("Copy"));
     }
 
     if (!data.linkText.isEmpty() && data.linkUrl.isValid()) {
-        item = new CopyLinkMenuItem(menu, data.linkUrl, data.linkText);
-        ui()->addMenuItem(item, QObject::tr("Copy link address"));
+        if (m_navigationEnabled) {
+            item = new CopyLinkMenuItem(menu, data.linkUrl, data.linkText);
+            ui()->addMenuItem(item, QObject::tr("Copy link address"));
+        }
     }
 
     // FIXME: expose the context menu data as an attached property to make this more useful
@@ -822,6 +825,21 @@ bool QQuickWebEngineView::canGoForward() const
     if (!d->adapter)
         return false;
     return d->adapter->canGoForward();
+}
+
+bool QQuickWebEngineView::navigationEnabled() const
+{
+    Q_D(const QQuickWebEngineView);
+    return d->m_navigationEnabled;
+}
+
+void QQuickWebEngineView::setNavigationEnabled(bool enabled)
+{
+    Q_D(QQuickWebEngineView);
+    if (d->m_navigationEnabled != enabled) {
+        d->m_navigationEnabled = enabled;
+        emit navigationEnabledChanged();
+    }
 }
 
 void QQuickWebEngineView::runJavaScript(const QString &script, const QJSValue &callback)
