@@ -184,6 +184,7 @@ public:
     QList<QSharedPointer<CertificateErrorController> > m_certificateErrorControllers;
     QQmlWebChannel *m_webChannel;
     uint m_webChannelWorld;
+    bool m_navigationEnabled;
 
 private:
     QScopedPointer<QtWebEngineCore::UIDelegatesManager> m_uIDelegatesManager;
