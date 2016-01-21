@@ -85,15 +85,16 @@ Q_SIGNALS:
     void triggered();
 };
 
-class CopyMenuItem : public MenuItemHandler {
+class CopyLinkMenuItem : public MenuItemHandler {
     Q_OBJECT
 public:
-    CopyMenuItem(QObject *parent, const QString &textToCopy);
+    CopyLinkMenuItem(QObject *parent, const QUrl &url, const QString &title);
 
 private:
     void onTriggered();
 
-    QString m_textToCopy;
+    const QUrl m_url;
+    const QString m_title;
 };
 
 class NavigateMenuItem : public MenuItemHandler {

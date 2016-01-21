@@ -43,6 +43,7 @@
 #include <QClipboard>
 #include <QFileInfo>
 #include <QGuiApplication>
+#include <QMimeData>
 #include <QQmlContext>
 #include <QQmlEngine>
 #include <QQmlProperty>
@@ -107,17 +108,24 @@ MenuItemHandler::MenuItemHandler(QObject *parent)
 {
 }
 
-
-CopyMenuItem::CopyMenuItem(QObject *parent, const QString &textToCopy)
+CopyLinkMenuItem::CopyLinkMenuItem(QObject *parent, const QUrl &url, const QString &title)
     : MenuItemHandler(parent)
-    , m_textToCopy(textToCopy)
+    , m_url(url)
+    , m_title(title)
 {
-    connect(this, &MenuItemHandler::triggered, this, &CopyMenuItem::onTriggered);
+    connect(this, &MenuItemHandler::triggered, this, &CopyLinkMenuItem::onTriggered);
 }
 
-void CopyMenuItem::onTriggered()
+void CopyLinkMenuItem::onTriggered()
 {
-    qApp->clipboard()->setText(m_textToCopy);
+    QString urlString = m_url.toString(QUrl::FullyEncoded);
+    QString title = m_title.toHtmlEscaped();
+    QMimeData *data = new QMimeData();
+    data->setText(urlString);
+    QString html = QStringLiteral("<a href=\"") + urlString + QStringLiteral("\">") + title + QStringLiteral("</a>");
+    data->setHtml(html);
+    data->setUrls(QList<QUrl>() << m_url);
+    qApp->clipboard()->setMimeData(data);
 }
 
 NavigateMenuItem::NavigateMenuItem(QObject *parent, const QExplicitlySharedDataPointer<WebContentsAdapter> &adapter, const QUrl &targetUrl)

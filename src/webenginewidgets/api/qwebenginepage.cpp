@@ -858,9 +858,7 @@ QMenu *QWebEnginePage::createStandardContextMenu()
         connect(action, &QAction::triggered, d->view, &QWebEngineView::reload);
         menu->addAction(action);
     } else {
-        action = new QAction(tr("Copy..."), menu);
-        connect(action, &QAction::triggered, SaveToClipboardFunctor(contextMenuData.selectedText));
-        menu->addAction(action);
+        menu->addAction(QWebEnginePage::action(Copy));
     }
 
     if (!contextMenuData.linkText.isEmpty() && contextMenuData.linkUrl.isValid()) {

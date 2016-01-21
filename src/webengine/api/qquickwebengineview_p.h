@@ -113,6 +113,7 @@ class Q_WEBENGINE_PRIVATE_EXPORT QQuickWebEngineView : public QQuickItem {
     Q_ENUMS(Feature);
     Q_ENUMS(JavaScriptConsoleMessageLevel);
     Q_FLAGS(FindFlags);
+    Q_ENUMS(WebAction);
 
 public:
     QQuickWebEngineView(QQuickItem *parent = 0);
@@ -181,6 +182,27 @@ public:
         Geolocation
     };
 
+    enum WebAction {
+        NoWebAction = - 1,
+        Back,
+        Forward,
+        Stop,
+        Reload,
+
+        Cut,
+        Copy,
+        Paste,
+
+        Undo,
+        Redo,
+        SelectAll,
+        ReloadAndBypassCache,
+
+        PasteAndMatchStyle,
+
+        WebActionCount
+    };
+
     // must match WebContentsAdapterClient::JavaScriptConsoleMessageLevel
     enum JavaScriptConsoleMessageLevel {
         InfoMessageLevel = 0,
@@ -223,6 +245,7 @@ public Q_SLOTS:
     Q_REVISION(1) void findText(const QString &subString, FindFlags options = 0, const QJSValue &callback = QJSValue());
     Q_REVISION(1) void fullScreenCancelled();
     Q_REVISION(1) void grantFeaturePermission(const QUrl &securityOrigin, Feature, bool granted);
+    Q_REVISION(1) void triggerWebAction(WebAction action);
 
 Q_SIGNALS:
     void titleChanged();
