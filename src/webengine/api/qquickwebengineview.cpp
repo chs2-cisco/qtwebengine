@@ -133,6 +133,7 @@ QQuickWebEngineViewPrivate::QQuickWebEngineViewPrivate()
     , m_activeFocusOnPress(true)
     , devicePixelRatio(QGuiApplication::primaryScreen()->devicePixelRatio())
     , m_webChannel(0)
+    , m_navigationEnabled(true)
     , m_dpiScale(1.0)
     , m_backgroundColor(Qt::white)
     , m_defaultZoomFactor(1.0)
@@ -230,7 +231,7 @@ bool QQuickWebEngineViewPrivate::contextMenuRequested(const WebEngineContextMenu
         ui()->addMenuItem(item, QQuickWebEngineView::tr("Follow Link"));
     }
 
-    if (data.selectedText.isEmpty()) {
+    if (m_navigationEnabled && data.selectedText.isEmpty()) {
         item = new MenuItemHandler(menu);
         QObject::connect(item, &MenuItemHandler::triggered, q, &QQuickWebEngineView::goBack);
         ui()->addMenuItem(item, QQuickWebEngineView::tr("Back"), QStringLiteral("go-previous"), q->canGoBack());
@@ -242,7 +243,7 @@ bool QQuickWebEngineViewPrivate::contextMenuRequested(const WebEngineContextMenu
         item = new MenuItemHandler(menu);
         QObject::connect(item, &MenuItemHandler::triggered, q, &QQuickWebEngineView::reload);
         ui()->addMenuItem(item, QQuickWebEngineView::tr("Reload"), QStringLiteral("view-refresh"));
-    } else {
+    } else if(!data.selectedText.isEmpty()) {
         item = new MenuItemHandler(menu);
         QObject::connect(item, &MenuItemHandler::triggered, [q] { q->triggerWebAction(QQuickWebEngineView::Copy); });
         ui()->addMenuItem(item, QQuickWebEngineView::tr("Copy"));
@@ -1085,6 +1086,21 @@ bool QQuickWebEngineView::canGoForward() const
     if (!d->adapter)
         return false;
     return d->adapter->canGoForward();
+}
+
+bool QQuickWebEngineView::navigationEnabled() const
+{
+    Q_D(const QQuickWebEngineView);
+    return d->m_navigationEnabled;
+}
+
+void QQuickWebEngineView::setNavigationEnabled(bool enabled)
+{
+    Q_D(QQuickWebEngineView);
+    if (d->m_navigationEnabled != enabled) {
+        d->m_navigationEnabled = enabled;
+        emit navigationEnabledChanged();
+    }
 }
 
 void QQuickWebEngineView::runJavaScript(const QString &script, const QJSValue &callback)

@@ -211,6 +211,7 @@ public:
     QMap<quint64, QJSValue> m_callbacks;
     QList<QSharedPointer<CertificateErrorController> > m_certificateErrorControllers;
     QQmlWebChannel *m_webChannel;
+    bool m_navigationEnabled;
 
 private:
     QScopedPointer<QtWebEngineCore::UIDelegatesManager> m_uIDelegatesManager;

@@ -114,6 +114,15 @@ class Q_WEBENGINE_PRIVATE_EXPORT QQuickWebEngineView : public QQuickItem {
     Q_PROPERTY(QQuickWebEngineTestSupport *testSupport READ testSupport WRITE setTestSupport FINAL)
 #endif
 
+    Q_PROPERTY(bool navigationEnabled READ navigationEnabled WRITE setNavigationEnabled NOTIFY navigationEnabledChanged)
+
+    Q_ENUMS(NavigationRequestAction);
+    Q_ENUMS(NavigationType);
+    Q_ENUMS(LoadStatus);
+    Q_ENUMS(ErrorDomain);
+    Q_ENUMS(NewViewDestination);
+    Q_ENUMS(Feature);
+    Q_ENUMS(JavaScriptConsoleMessageLevel);
     Q_FLAGS(FindFlags);
 
 public:
@@ -133,6 +142,8 @@ public:
     void setZoomFactor(qreal arg);
     QColor backgroundColor() const;
     void setBackgroundColor(const QColor &color);
+    bool navigationEnabled() const;
+    void setNavigationEnabled(bool);
 
     QQuickWebEngineViewExperimental *experimental() const;
 
@@ -297,6 +308,7 @@ private Q_SLOTS:
 Q_SIGNALS:
     void titleChanged();
     void urlChanged();
+    void navigationEnabledChanged();
     void iconChanged();
     void loadingChanged(QQuickWebEngineLoadRequest *loadRequest);
     void loadProgressChanged();
