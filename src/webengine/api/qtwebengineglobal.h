@@ -54,6 +54,7 @@ QT_BEGIN_NAMESPACE
 namespace QtWebEngine
 {
     Q_WEBENGINE_EXPORT void initialize();
+    Q_WEBENGINE_EXPORT void deleteShareContext();
 }
 
 QT_END_NAMESPACE
