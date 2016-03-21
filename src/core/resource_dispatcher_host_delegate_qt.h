@@ -64,6 +64,7 @@ public:
 private:
     void triggerDialog();
     void destroy();
+    bool authenticateProxy();
 
     QUrl m_url;
     QString m_realm;

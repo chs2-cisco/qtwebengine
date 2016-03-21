@@ -51,6 +51,8 @@
 #include "type_conversion.h"
 #include "web_contents_view_qt.h"
 
+#include <QtNetwork/QNetworkProxy>
+
 namespace QtWebEngineCore {
 
 ResourceDispatcherHostLoginDelegateQt::ResourceDispatcherHostLoginDelegateQt(net::AuthChallengeInfo *authInfo, net::URLRequest *request)
@@ -106,7 +108,9 @@ void ResourceDispatcherHostLoginDelegateQt::triggerDialog()
 
     AuthenticationDialogControllerPrivate *dialogControllerData = new AuthenticationDialogControllerPrivate(this);
     m_dialogController.reset(new AuthenticationDialogController(dialogControllerData));
-    client->authenticationRequired(m_dialogController);
+
+    if (!isProxy() || !authenticateProxy())
+        client->authenticationRequired(m_dialogController);
 }
 
 void ResourceDispatcherHostLoginDelegateQt::sendAuthToRequester(bool success, const QString &user, const QString &password)
@@ -128,6 +132,20 @@ void ResourceDispatcherHostLoginDelegateQt::destroy()
 {
     m_dialogController.reset();
     m_request = 0;
+}
+
+bool ResourceDispatcherHostLoginDelegateQt::authenticateProxy()
+{
+    QList<QNetworkProxy> proxies = QNetworkProxyFactory::proxyForQuery(QNetworkProxyQuery(m_dialogController->url()));
+    Q_FOREACH(const QNetworkProxy &p, proxies) {
+        QString user = p.user();
+        QString pass = p.password();
+        if (!user.isEmpty() && !pass.isNull()) {
+            m_dialogController->accept(user, pass);
+            return true;
+        }
+    }
+    return false;
 }
 
 content::ResourceDispatcherHostLoginDelegate *ResourceDispatcherHostDelegateQt::CreateLoginDelegate(net::AuthChallengeInfo *authInfo, net::URLRequest *request)
