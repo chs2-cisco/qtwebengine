@@ -6,7 +6,7 @@ GYP_CONFIG += \
     use_ash=0 \
 
 # Chromium builds with debug info in release by default but Qt doesn't
-CONFIG(release, debug|release):!force_debug_info: GYP_CONFIG += fastbuild=1
+CONFIG(release, debug|release):!force_debug_info: GYP_CONFIG += fastbuild=0
 
 # Libvpx build needs additional search path on Windows.
 GYP_ARGS += "-D qtwe_chromium_obj_dir=\"$$OUT_PWD/$$getConfigDir()/obj/$${getChromiumSrcDir()}\""
