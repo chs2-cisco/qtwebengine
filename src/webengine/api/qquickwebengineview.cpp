@@ -197,7 +197,7 @@ bool QQuickWebEngineViewPrivate::contextMenuRequested(const WebEngineContextMenu
     } else if(!data.selectedText.isEmpty()) {
         item = new MenuItemHandler(menu);
         QObject::connect(item, &MenuItemHandler::triggered, [q] { q->triggerWebAction(QQuickWebEngineView::Copy); });
-        ui()->addMenuItem(item, QObject::tr("Copy"));
+        ui()->addMenuItem(item, QCoreApplication::translate("TextFieldMenu", "Copy"));
     }
 
     if (!data.linkText.isEmpty() && data.linkUrl.isValid()) {
