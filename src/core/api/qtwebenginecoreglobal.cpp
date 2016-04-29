@@ -49,7 +49,7 @@ namespace QtWebEngineCore {
 
 static QOpenGLContext *shareContext;
 
-static void deleteShareContext()
+QWEBENGINE_PRIVATE_EXPORT void deleteShareContext()
 {
     delete shareContext;
     shareContext = 0;

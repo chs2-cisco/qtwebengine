@@ -39,6 +39,7 @@
 namespace QtWebEngineCore
 {
     extern void initialize();
+    extern void deleteShareContext();
 }
 
 QT_BEGIN_NAMESPACE
@@ -69,6 +70,11 @@ namespace QtWebEngine {
 void initialize()
 {
     QtWebEngineCore::initialize();
+}
+
+void deleteShareContext()
+{
+   QtWebEngineCore::deleteShareContext();
 }
 } // namespace QtWebEngine
 
