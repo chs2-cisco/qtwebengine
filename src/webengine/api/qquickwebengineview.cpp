@@ -225,11 +225,13 @@ bool QQuickWebEngineViewPrivate::contextMenuRequested(const WebEngineContextMenu
     // Populate our menu
     MenuItemHandler *item = 0;
 
+    /* Disabling for BTUC-12718
     if (!data.linkText.isEmpty() && data.linkUrl.isValid()) {
         item = new MenuItemHandler(menu);
         QObject::connect(item, &MenuItemHandler::triggered, [q] { q->triggerWebAction(QQuickWebEngineView::OpenLinkInThisWindow); });
         ui()->addMenuItem(item, QQuickWebEngineView::tr("Follow Link"));
     }
+    */
 
     if (m_navigationEnabled && data.selectedText.isEmpty()) {
         item = new MenuItemHandler(menu);
