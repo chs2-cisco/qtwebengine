@@ -221,68 +221,6 @@ bool QQuickWebEngineViewPrivate::contextMenuRequested(const WebEngineContextMenu
         item = new MenuItemHandler(menu);
         QObject::connect(item, &MenuItemHandler::triggered, [q] { q->triggerWebAction(QQuickWebEngineView::CopyLinkToClipboard); });
         ui()->addMenuItem(item, QQuickWebEngineView::tr("Copy Link URL"));
-        item = new MenuItemHandler(menu);
-        QObject::connect(item, &MenuItemHandler::triggered, [q] { q->triggerWebAction(QQuickWebEngineView::DownloadLinkToDisk); });
-        ui()->addMenuItem(item, QQuickWebEngineView::tr("Save Link"));
-    }
-    if (contextMenuData.mediaUrl.isValid()) {
-        switch (contextMenuData.mediaType) {
-        case WebEngineContextMenuData::MediaTypeImage:
-            item = new MenuItemHandler(menu);
-            QObject::connect(item, &MenuItemHandler::triggered, [q] { q->triggerWebAction(QQuickWebEngineView::CopyImageUrlToClipboard); });
-            ui()->addMenuItem(item, QQuickWebEngineView::tr("Copy Image URL"));
-            item = new MenuItemHandler(menu);
-            QObject::connect(item, &MenuItemHandler::triggered, [q] { q->triggerWebAction(QQuickWebEngineView::CopyImageToClipboard); });
-            ui()->addMenuItem(item, QQuickWebEngineView::tr("Copy Image"));
-            item = new MenuItemHandler(menu);
-            QObject::connect(item, &MenuItemHandler::triggered, [q] { q->triggerWebAction(QQuickWebEngineView::DownloadImageToDisk); });
-            ui()->addMenuItem(item, QQuickWebEngineView::tr("Save Image"));
-            break;
-        case WebEngineContextMenuData::MediaTypeCanvas:
-            Q_UNREACHABLE();    // mediaUrl is invalid for canvases
-            break;
-        case WebEngineContextMenuData::MediaTypeAudio:
-        case WebEngineContextMenuData::MediaTypeVideo:
-            item = new MenuItemHandler(menu);
-            QObject::connect(item, &MenuItemHandler::triggered, [q] { q->triggerWebAction(QQuickWebEngineView::CopyMediaUrlToClipboard); });
-            ui()->addMenuItem(item, QQuickWebEngineView::tr("Copy Media URL"));
-            item = new MenuItemHandler(menu);
-            QObject::connect(item, &MenuItemHandler::triggered, [q] { q->triggerWebAction(QQuickWebEngineView::DownloadMediaToDisk); });
-            ui()->addMenuItem(item, QQuickWebEngineView::tr("Save Media"));
-            item = new MenuItemHandler(menu);
-            QObject::connect(item, &MenuItemHandler::triggered, [q] { q->triggerWebAction(QQuickWebEngineView::ToggleMediaPlayPause); });
-            ui()->addMenuItem(item, QQuickWebEngineView::tr("Toggle Play/Pause"));
-            item = new MenuItemHandler(menu);
-            QObject::connect(item, &MenuItemHandler::triggered, [q] { q->triggerWebAction(QQuickWebEngineView::ToggleMediaLoop); });
-            ui()->addMenuItem(item, QQuickWebEngineView::tr("Toggle Looping"));
-            if (contextMenuData.mediaFlags & WebEngineContextMenuData::MediaHasAudio) {
-                item = new MenuItemHandler(menu);
-                QObject::connect(item, &MenuItemHandler::triggered, [q] { q->triggerWebAction(QQuickWebEngineView::ToggleMediaMute); });
-                ui()->addMenuItem(item, QQuickWebEngineView::tr("Toggle Mute"));
-            }
-            if (contextMenuData.mediaFlags & WebEngineContextMenuData::MediaCanToggleControls) {
-                item = new MenuItemHandler(menu);
-                QObject::connect(item, &MenuItemHandler::triggered, [q] { q->triggerWebAction(QQuickWebEngineView::ToggleMediaControls); });
-                ui()->addMenuItem(item, QQuickWebEngineView::tr("Toggle Media Controls"));
-            }
-            break;
-        default:
-            break;
-        }
-    } else if (contextMenuData.mediaType == WebEngineContextMenuData::MediaTypeCanvas) {
-        item = new MenuItemHandler(menu);
-        QObject::connect(item, &MenuItemHandler::triggered, [q] { q->triggerWebAction(QQuickWebEngineView::CopyImageToClipboard); });
-        ui()->addMenuItem(item, QQuickWebEngineView::tr("Copy Image"));
-    }
-    if (adapter->hasInspector()) {
-        item = new MenuItemHandler(menu);
-        QObject::connect(item, &MenuItemHandler::triggered, [q] { q->triggerWebAction(QQuickWebEngineView::InspectElement); });
-        ui()->addMenuItem(item, QQuickWebEngineView::tr("Inspect Element"));
-    }
-    if (isFullScreenMode()) {
-        item = new MenuItemHandler(menu);
-        QObject::connect(item, &MenuItemHandler::triggered, [q] { q->triggerWebAction(QQuickWebEngineView::ExitFullScreen); });
-        ui()->addMenuItem(item, QQuickWebEngineView::tr("Exit Full Screen Mode"));
     }
 
     // FIXME: expose the context menu data as an attached property to make this more useful
