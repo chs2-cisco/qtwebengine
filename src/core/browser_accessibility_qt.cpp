@@ -166,7 +166,6 @@ void *BrowserAccessibilityQt::interface_cast(QAccessible::InterfaceType type)
             return static_cast<QAccessibleActionInterface*>(this);
         break;
     case QAccessible::TextInterface:
-        if (IsEditableText())
             return static_cast<QAccessibleTextInterface*>(this);
         break;
     case QAccessible::ValueInterface: {
