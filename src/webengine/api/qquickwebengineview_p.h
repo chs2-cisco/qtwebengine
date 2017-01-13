@@ -286,6 +286,7 @@ public:
 #endif
 
     bool activeFocusOnPress() const;
+    void setToolTip(const QString &tooltip);
 
 public Q_SLOTS:
     void runJavaScript(const QString&, const QJSValue & = QJSValue());
@@ -327,6 +328,7 @@ Q_SIGNALS:
     Q_REVISION(2) void backgroundColorChanged();
     Q_REVISION(2) void renderProcessTerminated(RenderProcessTerminationStatus terminationStatus, int exitCode);
     Q_REVISION(2) void windowCloseRequested();
+    Q_REVISION(2) void toolTipRequested(const QString &text);
 
 protected:
     void geometryChanged(const QRectF &newGeometry, const QRectF &oldGeometry) Q_DECL_OVERRIDE;

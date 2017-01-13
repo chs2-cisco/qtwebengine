@@ -237,8 +237,9 @@ void RenderWidgetHostViewQtDelegateWidget::inputMethodStateChanged(bool editorVi
     qApp->inputMethod()->setVisible(editorVisible);
 }
 
-void RenderWidgetHostViewQtDelegateWidget::setTooltip(const QString &tooltip)
+void RenderWidgetHostViewQtDelegateWidget::setTooltip(WebContentsAdapterClient* container, const QString &tooltip)
 {
+    Q_UNUSED(container);
     QString wrappedTip;
     if (!tooltip.isEmpty())
          wrappedTip = QLatin1String("<p>") % tooltip.toHtmlEscaped().left(MaxTooltipLength) % QLatin1String("</p>");

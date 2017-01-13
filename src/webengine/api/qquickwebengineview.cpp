@@ -943,6 +943,12 @@ bool QQuickWebEngineView::activeFocusOnPress() const
     return d->m_activeFocusOnPress;
 }
 
+void QQuickWebEngineView::setToolTip(const QString &tooltip)
+{
+    Q_D(QQuickWebEngineView);
+    emit toolTipRequested(tooltip);
+}
+
 void QQuickWebEngineViewPrivate::didRunJavaScript(quint64 requestId, const QVariant &result)
 {
     Q_Q(QQuickWebEngineView);

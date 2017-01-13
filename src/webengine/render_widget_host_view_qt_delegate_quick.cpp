@@ -47,6 +47,7 @@
 #include <private/qquickwindow_p.h>
 #include <private/qsgcontext_p.h>
 
+
 namespace QtWebEngineCore {
 
 RenderWidgetHostViewQtDelegateQuick::RenderWidgetHostViewQtDelegateQuick(RenderWidgetHostViewQtDelegateClient *client, bool isPopup)
@@ -351,6 +352,12 @@ void RenderWidgetHostViewQtDelegateQuick::onHide()
 {
     QFocusEvent event(QEvent::FocusOut, Qt::OtherFocusReason);
     m_client->forwardEvent(&event);
+}
+
+void RenderWidgetHostViewQtDelegateQuick::setTooltip(WebContentsAdapterClient* container, const QString &tooltip)
+{
+    QQuickWebEngineView *view = static_cast<QQuickWebEngineViewPrivate *>(container)->q_func();
+    view->setToolTip(tooltip);
 }
 
 } // namespace QtWebEngineCore
