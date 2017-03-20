@@ -66,6 +66,8 @@ namespace QtWebEngineCore {
 void GetScreenInfoFromNativeWindow(QWindow* window, blink::WebScreenInfo* results)
 {
     QScreen* screen = window->screen();
+    if( !screen )
+        return;
 
     blink::WebScreenInfo r;
     r.deviceScaleFactor = screen->devicePixelRatio();
