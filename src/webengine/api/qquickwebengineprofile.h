@@ -124,6 +124,8 @@ public:
 
     static QQuickWebEngineProfile *defaultProfile();
 
+    Q_REVISION(2) Q_INVOKABLE void clearHttpCache();
+
 Q_SIGNALS:
     void storageNameChanged();
     void offTheRecordChanged();

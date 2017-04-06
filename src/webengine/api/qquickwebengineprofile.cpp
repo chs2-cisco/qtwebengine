@@ -601,6 +601,20 @@ QWebEngineCookieStore *QQuickWebEngineProfile::cookieStore() const
 }
 
 /*!
+    \qmlmethod void WebEngineProfile::clearHttpCache()
+    \since QtWebEngine 1.3
+
+    Removes the profile's cache entries.
+
+    \sa WebEngineProfile::cachePath
+*/
+void QQuickWebEngineProfile::clearHttpCache()
+{
+    Q_D(QQuickWebEngineProfile);
+    d->browserContext()->clearHttpCache();
+}
+
+/*!
     Registers a request interceptor singleton \a interceptor to intercept URL requests.
 
     The profile does not take ownership of the pointer.

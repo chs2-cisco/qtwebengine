@@ -473,6 +473,12 @@ void BrowserContextAdapter::setHttpAcceptLanguage(const QString &httpAcceptLangu
         m_browserContext->url_request_getter_->updateUserAgent();
 }
 
+void BrowserContextAdapter::clearHttpCache()
+{
+    if (m_browserContext->url_request_getter_.get())
+        m_browserContext->url_request_getter_->clearHttpCache();
+}
+
 void BrowserContextAdapter::resetVisitedLinksManager()
 {
     m_visitedLinksManager.reset(new WebEngineVisitedLinksManager(this));

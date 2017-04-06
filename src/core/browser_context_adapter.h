@@ -162,6 +162,8 @@ public:
     QString httpAcceptLanguage() const;
     void setHttpAcceptLanguage(const QString &httpAcceptLanguage);
 
+    void clearHttpCache();
+
 private:
     void updateCustomUrlSchemeHandlers();
     void resetVisitedLinksManager();
