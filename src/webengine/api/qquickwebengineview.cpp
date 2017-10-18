@@ -1238,6 +1238,22 @@ void QQuickWebEngineView::setNavigationEnabled(bool enabled)
     }
 }
 
+void QQuickWebEngineView::setExtraContextMenuEntriesComponent(QQmlComponent *contextMenuExtras)
+{
+    Q_D(QQuickWebEngineView);
+    if (d->contextMenuExtraItems == contextMenuExtras)
+        return;
+    d->contextMenuExtraItems = contextMenuExtras;
+    emit extraContextMenuEntriesComponentChanged();
+}
+
+QQmlComponent *QQuickWebEngineView::extraContextMenuEntriesComponent() const
+{
+    Q_D(const QQuickWebEngineView);
+    return d->contextMenuExtraItems;
+}
+
+
 void QQuickWebEngineView::runJavaScript(const QString &script, const QJSValue &callback)
 {
     Q_D(QQuickWebEngineView);
