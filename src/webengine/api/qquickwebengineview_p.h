@@ -527,6 +527,7 @@ Q_SIGNALS:
     Q_REVISION(4) void fileDialogRequested(QQuickWebEngineFileDialogRequest *request);
     Q_REVISION(4) void formValidationMessageRequested(QQuickWebEngineFormValidationMessageRequest *request);
     Q_REVISION(5) void pdfPrintingFinished(const QString &filePath, bool success);
+    Q_REVISION(2) void toolTipRequested(const QString &text);
 
 #ifdef ENABLE_QML_TESTSUPPORT_API
     void testSupportChanged();
