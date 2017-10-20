@@ -747,7 +747,9 @@ void DelegatedFrameNode::preprocess()
     typedef QHash<unsigned, QSharedPointer<ResourceHolder> >::const_iterator ResourceHolderIterator;
     ResourceHolderIterator end = m_chromiumCompositorData->resourceHolders.constEnd();
     for (ResourceHolderIterator it = m_chromiumCompositorData->resourceHolders.constBegin(); it != end ; ++it) {
-        if ((*it)->needsToFetch())
+        if (!(*it))
+            qCritical("Trying to use null resource holder");
+        else if ((*it)->needsToFetch())
             mailboxesToFetch.append(static_cast<MailboxTexture *>((*it)->texture()));
     }
 
@@ -1019,8 +1021,12 @@ void DelegatedFrameNode::commit(ChromiumCompositorData *chromiumCompositorData,
             ResourceHolderIterator;
 
     ResourceHolderIterator end = resourceCandidates.constEnd();
-    for (ResourceHolderIterator it = resourceCandidates.constBegin(); it != end ; ++it)
-        resourcesToRelease->push_back((*it)->returnResource());
+    for (ResourceHolderIterator it = resourceCandidates.constBegin(); it != end ; ++it) {
+        if (!(*it))
+            qCritical("Trying to remove null resource candidate");
+        else
+            resourcesToRelease->push_back((*it)->returnResource());
+    }
 
     m_previousViewportSize = viewportSize;
 }
@@ -1174,6 +1180,10 @@ void DelegatedFrameNode::handleQuad(
     case cc::DrawQuad::TILED_CONTENT: {
         const cc::TileDrawQuad *tquad = cc::TileDrawQuad::MaterialCast(quad);
         ResourceHolder *resource = findAndHoldResource(tquad->resource_id(), resourceCandidates);
+        if (!resource) {
+            qCritical("No such resource: %d", tquad->resource_id());
+            break;
+        }
         nodeHandler->setupTiledContentNode(
             initAndHoldTexture(resource, quad->ShouldDrawWithBlending(), apiDelegate),
             toQt(quad->rect), toQt(tquad->tex_coord_rect),
