@@ -1124,7 +1124,8 @@ bool QQuickWebEngineViewPrivate::isEnabled() const
 
 void QQuickWebEngineViewPrivate::setToolTip(const QString &toolTipText)
 {
-    ui()->showToolTip(toolTipText);
+    Q_Q(QQuickWebEngineView);
+    Q_EMIT q->toolTipRequested(toolTipText);
 }
 
 bool QQuickWebEngineView::isLoading() const
