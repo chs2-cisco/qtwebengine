@@ -81,10 +81,10 @@ namespace QtWebEngineCore {
 
     void RenderViewContextMenuQt::initMenu(bool navigationEnabled)
     {
-        if (isFullScreenMode()) {
+        /*if (isFullScreenMode()) {
             appendExitFullscreenItem();
             appendSeparatorItem();
-        }
+        }*/
 
         if (m_contextData.isEditable() && !m_contextData.spellCheckerSuggestions().isEmpty()) {
             appendSpellingSuggestionItems();
@@ -103,7 +103,7 @@ namespace QtWebEngineCore {
         if (m_contextData.linkUrl().isValid() || !m_contextData.unfilteredLinkUrl().isEmpty() || !m_contextData.linkUrl().isEmpty())
             appendLinkItems();
 
-        if (m_contextData.mediaUrl().isValid()) {
+        /*if (m_contextData.mediaUrl().isValid()) {
             switch (m_contextData.mediaType()) {
             case WebEngineContextMenuData::MediaTypeImage:
                 appendSeparatorItem();
@@ -128,7 +128,7 @@ namespace QtWebEngineCore {
         if (canViewSource() || hasInspector()) {
             appendSeparatorItem();
             appendDeveloperItems();
-        }
+        }*/
     }
 
     void RenderViewContextMenuQt::appendCanvasItems()
@@ -178,10 +178,10 @@ namespace QtWebEngineCore {
 
     void RenderViewContextMenuQt::appendLinkItems()
     {
-        addMenuItem(RenderViewContextMenuQt::OpenLinkInNewTab);
+        /*addMenuItem(RenderViewContextMenuQt::OpenLinkInNewTab);
         addMenuItem(RenderViewContextMenuQt::OpenLinkInNewWindow);
         appendSeparatorItem();
-        addMenuItem(RenderViewContextMenuQt::DownloadLinkToDisk);
+        addMenuItem(RenderViewContextMenuQt::DownloadLinkToDisk);*/
         addMenuItem(RenderViewContextMenuQt::CopyLinkToClipboard);
     }
 
