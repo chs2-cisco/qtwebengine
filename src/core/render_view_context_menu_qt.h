@@ -100,7 +100,7 @@ public:
     static const QString getMenuItemName(RenderViewContextMenuQt::ContextMenuItem menuItem);
 
     RenderViewContextMenuQt(const WebEngineContextMenuData &data);
-    void initMenu();
+    void initMenu(bool navigationEnabled = true);
 
 protected:
     virtual bool hasInspector() = 0;

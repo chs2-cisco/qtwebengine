@@ -217,6 +217,7 @@ private:
     qreal m_zoomFactor;
     bool m_ui2Enabled;
     bool m_profileInitialized;
+    bool m_navigationEnabled;
 };
 
 #ifndef QT_NO_ACCESSIBILITY
