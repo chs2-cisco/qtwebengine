@@ -79,7 +79,7 @@ namespace QtWebEngineCore {
     {
     }
 
-    void RenderViewContextMenuQt::initMenu()
+    void RenderViewContextMenuQt::initMenu(bool navigationEnabled)
     {
         if (isFullScreenMode()) {
             appendExitFullscreenItem();
@@ -96,7 +96,7 @@ namespace QtWebEngineCore {
                 appendEditableItems();
             else if (!m_contextData.selectedText().isEmpty())
                 appendCopyItem();
-            else
+            else if (navigationEnabled)
                 appendPageItems();
         }
 

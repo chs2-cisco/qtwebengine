@@ -131,6 +131,7 @@ QQuickWebEngineViewPrivate::QQuickWebEngineViewPrivate()
     , m_zoomFactor(1.0)
     , m_ui2Enabled(false)
     , m_profileInitialized(false)
+    , m_navigationEnabled(true)
 {
     memset(actions, 0, sizeof(actions));
 
@@ -254,7 +255,7 @@ void QQuickWebEngineViewPrivate::contextMenuRequested(const WebEngineContextMenu
     QQuickContextMenuBuilder contextMenuBuilder(data, q, menu);
 
     // Populate our menu
-    contextMenuBuilder.initMenu();
+    contextMenuBuilder.initMenu(m_navigationEnabled);
 
     // FIXME: expose the context menu data as an attached property to make this more useful
     if (contextMenuExtraItems)
@@ -1231,6 +1232,21 @@ bool QQuickWebEngineView::canGoForward() const
 {
     Q_D(const QQuickWebEngineView);
     return d->adapter->canGoForward();
+}
+
+bool QQuickWebEngineView::navigationEnabled() const
+{
+    Q_D(const QQuickWebEngineView);
+    return d->m_navigationEnabled;
+}
+
+void QQuickWebEngineView::setNavigationEnabled(bool enabled)
+{
+    Q_D(QQuickWebEngineView);
+    if (d->m_navigationEnabled != enabled) {
+        d->m_navigationEnabled = enabled;
+        emit navigationEnabledChanged();
+    }
 }
 
 void QQuickWebEngineView::runJavaScript(const QString &script, const QJSValue &callback)
