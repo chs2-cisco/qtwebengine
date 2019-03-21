@@ -137,6 +137,8 @@ class Q_WEBENGINE_PRIVATE_EXPORT QQuickWebEngineView : public QQuickItem {
 #endif
 
     Q_PROPERTY(bool navigationEnabled READ navigationEnabled WRITE setNavigationEnabled NOTIFY navigationEnabledChanged)
+    Q_PROPERTY(QQmlComponent *extraContextMenuEntriesComponent READ extraContextMenuEntriesComponent WRITE setExtraContextMenuEntriesComponent NOTIFY extraContextMenuEntriesComponentChanged)
+
 
 public:
     QQuickWebEngineView(QQuickItem *parent = 0);
@@ -159,6 +161,8 @@ public:
     QPointF scrollPosition() const;
     bool navigationEnabled() const;
     void setNavigationEnabled(bool);
+    void setExtraContextMenuEntriesComponent(QQmlComponent *);
+    QQmlComponent *extraContextMenuEntriesComponent() const;
 
     // must match WebContentsAdapterClient::NavigationRequestAction
     enum NavigationRequestAction {
@@ -519,6 +523,7 @@ Q_SIGNALS:
     void titleChanged();
     void urlChanged();
     void navigationEnabledChanged();
+    void extraContextMenuEntriesComponentChanged();
     void iconChanged();
     void loadingChanged(QQuickWebEngineLoadRequest *loadRequest);
     void loadProgressChanged();
