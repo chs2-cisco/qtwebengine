@@ -118,7 +118,23 @@ void LoginDelegateQt::triggerDialog(const content::ResourceRequestInfo::WebConte
 
     AuthenticationDialogControllerPrivate *dialogControllerData = new AuthenticationDialogControllerPrivate(this);
     m_dialogController.reset(new AuthenticationDialogController(dialogControllerData));
-    client->authenticationRequired(m_dialogController);
+
+    if (!isProxy() || !authenticateProxy())
+        client->authenticationRequired(m_dialogController);
+}
+
+bool LoginDelegateQt::authenticateProxy()
+{
+    QList<QNetworkProxy> proxies = QNetworkProxyFactory::proxyForQuery(QNetworkProxyQuery(m_dialogController->url()));
+    Q_FOREACH (const QNetworkProxy &p, proxies) {
+        QString userName = p.user();
+        QString password = p.password();
+        if (!userName.isEmpty() && !password.isNull()) {
+            m_dialogController->accept(userName, password);
+            return true;
+        }
+    }
+    return false;
 }
 
 void LoginDelegateQt::sendAuthToRequester(bool success, const QString &user, const QString &password)
