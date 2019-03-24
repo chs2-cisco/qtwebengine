@@ -47,6 +47,8 @@
 
 #include "web_contents_adapter_client.h"
 
+#include <QtNetwork/QNetworkProxy>
+
 namespace net {
 class AuthChallengeInfo;
 class AuthCredentials;
@@ -79,6 +81,7 @@ public:
 private:
     void triggerDialog(const content::ResourceRequestInfo::WebContentsGetter &);
     void destroy();
+    bool authenticateProxy();
 
     scoped_refptr<net::AuthChallengeInfo> m_authInfo;
 
