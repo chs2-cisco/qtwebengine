@@ -37,6 +37,12 @@
 **
 ****************************************************************************/
 
+/*
+ * BTUC-8726: WebEngine navigation enabled flag
+ *
+ * Mar 19, 2019, Aditya Kolachana (Cisco Systems, Inc.)
+*/
+
 #ifndef QQUICKWEBENGINEVIEW_P_P_H
 #define QQUICKWEBENGINEVIEW_P_P_H
 

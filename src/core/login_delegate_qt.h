@@ -37,6 +37,18 @@
 **
 ****************************************************************************/
 
+/*
+ * BTUC-21338: Query auth credentials from QNetworkProxy
+ *
+ * If proxy authentication is required, username and password are now
+ * queried from QNetworkProxy. If no valid credentials are available,
+ * a dialog is shown for user to enter the credentials. This change was
+ * required because at least on macOS several credential dialogs were shown
+ * for user when loading a web page.
+ *
+ * Mar 24, 2019, Aditya Kolachana (Cisco Systems, Inc.)
+*/
+
 #ifndef LOGIN_DELEGATE_QT_H
 #define LOGIN_DELEGATE_QT_H
 

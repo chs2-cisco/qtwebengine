@@ -37,6 +37,22 @@
 **
 ****************************************************************************/
 
+/*
+ * BTUC-21338: expose contextMenuExtraItems
+ *
+ * It used to be part of the QQuickWebEngineViewExperimental but the
+ * whole experimental was removed thus we need to expose the
+ * contextMenuExtraItems member of QQuickWebEngineView to be able to
+ * add our own items to the context menu.
+ *
+ * Mar 21, 2019, Aditya Kolachana (Cisco Systems, Inc.)
+*/
+/*
+ * BTUC-8726: WebEngine navigation enabled flag
+ *
+ * Mar 19, 2019, Aditya Kolachana (Cisco Systems, Inc.)
+*/
+
 #include "qquickwebengineview_p.h"
 #include "qquickwebengineview_p_p.h"
 #include "qtwebenginecoreglobal_p.h"

@@ -37,6 +37,17 @@
 **
 ****************************************************************************/
 
+/*
+ * BTUC-12718: Remove unneeded context menu items
+ *
+ * Mar 19, 2019, Aditya Kolachana (Cisco Systems, Inc.)
+*/
+/*
+ * BTUC-8726: WebEngine navigation enabled flag
+ *
+ * Mar 19, 2019, Aditya Kolachana (Cisco Systems, Inc.)
+*/
+
 #include <QtCore/QCoreApplication>
 #include "render_view_context_menu_qt.h"
 
